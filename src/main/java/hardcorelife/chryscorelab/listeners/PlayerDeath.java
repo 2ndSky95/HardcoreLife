@@ -37,6 +37,13 @@ public class PlayerDeath implements Listener {
         if (touchy.globalLivesEnabled()) {
             TextComponent component = Component.text("The server has " + remainingLives + " live(s) remaining.");
             server.broadcast(component);
+			
+			ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+            Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
+            Objective objective = scoreboard.registerNewObjective("lives", "dummy", "Total Lives");
+            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+            Score score = objective.getScore(Component.text("Lives: " + remainingLives));
+            score.setScore(remainingLives);
 
             if (remainingLives == 0) {
                 // Handle server permadeath
